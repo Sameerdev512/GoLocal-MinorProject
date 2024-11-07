@@ -49,9 +49,11 @@ const Navbar2 = () => {
               </li>
               <li className="nav-item">
                 <Link
-                  className="nav-link active"
+                  className={`nav-link ${
+                    activeLink === "about" ? "active" : ""
+                  }`}
                   aria-current="page"
-                  to="/about"
+                  to="/About"
                 >
                   About Us
                 </Link>
@@ -95,7 +97,7 @@ const Navbar2 = () => {
               />
             </form>
 
-            <CgProfile 
+            <CgProfile
               className="mx-2"
               style={{
                 cursor: "pointer",

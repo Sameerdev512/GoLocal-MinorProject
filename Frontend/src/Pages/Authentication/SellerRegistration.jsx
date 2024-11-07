@@ -26,31 +26,35 @@ const SellerRegistration = () => {
   }
 
   const handleSubmit=async()=>{
-    try{
-      const response = await fetch("http://localhost:8080/api/addSeller",{
-        method:'POST',
-        headers:{
-          'Content-Type':"application/json"
+    // Check if all fields are filled
+    if (
+      !sellerDetails.shopName ||
+      !sellerDetails.ownerName ||
+      !sellerDetails.category ||
+      !sellerDetails.email ||
+      !sellerDetails.contactNo
+    ) {
+      alert("Please fill in all required fields.");
+      return;
+    }
+    try {
+      const response = await fetch("http://localhost:8080/api/addSeller", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
-        body:JSON.stringify(sellerDetails)
+        body: JSON.stringify(sellerDetails),
       });
-      if(response.ok)
-      {
+      if (response.ok) {
         alert("seller registered sucessfully");
-      }
-      else{
+      } else {
         alert("Error Occured");
       }
-    }catch(error)
-    {
-      console.log("Error : "+error);
+    } catch (error) {
+      console.log("Error : " + error);
     }
   }
 
-
-  useEffect(()=>{
-    handleSubmit();
-  },[seller])
 
   return (
     <div>
@@ -153,7 +157,8 @@ const SellerRegistration = () => {
           />
           <label className="form-check-label">Check me out</label>
         </div>
-        <button type="submit" className="btn btn-primary" onClick={()=>dispatch(addSeller(sellerDetails))} >
+        <button type="submit" className="btn btn-primary" onClick={()=>{
+          dispatch(addSeller(sellerDetails));handleSubmit();}} >
           Submit
         </button>
       </div>

@@ -4,7 +4,7 @@ import { GiHamburgerMenu } from "react-icons/gi";
 
 const Navbar = () => {
   const location = useLocation();
-  const [activeLink, setActiveLink] = useState("");
+  const [activeLink, setActiveLink] = useState("home");
   const [sideBarVisible, setSideBarVisible] = useState("none");
 
   const handleSideBar = () => {
@@ -15,8 +15,14 @@ const Navbar = () => {
     // Set active link based on current path
     if (location.pathname === "/Login") {
       setActiveLink("login");
-    } else if (location.pathname === "/SignUp") {
+    } else if (location.pathname === "/") {
+      setActiveLink("home");
+    }else if (location.pathname === "/SignUp") {
       setActiveLink("signup");
+    } else if (location.pathname === "/Registration") {
+      setActiveLink("Registraion");
+    } else if (location.pathname === "/About") {
+      setActiveLink("about");
     } else {
       setActiveLink(""); // reset if on another route
     }
@@ -43,22 +49,35 @@ const Navbar = () => {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <Link className="nav-link active" aria-current="page" to="/">
+                <Link
+                  className={`nav-link ${
+                    activeLink === "home" ? "active" : ""
+                  }`}
+                  aria-current="page"
+                  to="/"
+                >
                   Home
                 </Link>
               </li>
               <li className="nav-item">
                 <Link
-                  className="nav-link active"
+                  className={`nav-link ${
+                    activeLink === "about" ? "active" : ""
+                  }`}
                   aria-current="page"
-                  to="/about"
+                  to="/About"
                 >
                   About Us
                 </Link>
               </li>
 
               <li>
-                <Link className="nav-link" to="/Registration">
+                <Link
+                  className={`nav-link ${
+                    activeLink === "Registraion" ? "active" : ""
+                  }`}
+                  to="/Registration"
+                >
                   Become a Seller
                 </Link>
               </li>
@@ -117,8 +136,8 @@ const Navbar = () => {
           right: sideBarVisible ? 0 : "-250px",
           height: "90vh",
           display: `${sideBarVisible}`,
-          backgroundColor:"whitesmoke",
-          transition:"right 0.3s ease-in-out"
+          backgroundColor: "whitesmoke",
+          transition: "right 0.3s ease-in-out",
         }}
       >
         <ul className="py-3">

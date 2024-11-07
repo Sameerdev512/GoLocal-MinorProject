@@ -4,7 +4,7 @@ const MyShopItem = () => {
     <div>
       <div className="card d-flex p-1 my-3" style={{ width: "240px" ,backgroundColor:'lightcyan'}}>
         <img
-          src="https://veirdo.in/cdn/shop/files/b_0119493a-9927-4550-8323-baefe5f625c0.jpg?v=1724147309"
+          src="/img.jpg"
           className="card-img-top"
           alt="..."
           style={{height:'200px'}}
