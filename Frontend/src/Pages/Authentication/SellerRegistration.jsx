@@ -5,56 +5,72 @@ import { addSeller } from "../../redux/slices/SellerSlice";
 import { useSelector } from "react-redux";
 
 const SellerRegistration = () => {
-
   const dispatch = useDispatch();
+  const seller = useSelector((state) => state.seller.seller);
+  const [sellerDetails, setSellerDetails] = useState({
+    shopName: "",
+    ownerName: "",
+    category: "",
+    firstName: "",
+    lastName: "",
+    email: "",
+    contactNo: "",
+    websiteLink: "",
+  });
 
-  const seller = useSelector((state)=>state.seller.seller)
+  const handleChange = (e) => {
+    setSellerDetails({ ...sellerDetails, [e.target.name]: e.target.value });
+    console.log(sellerDetails);
+  };
 
+  const [contactErr,setContactErr]=useState("")
+  const [emailErr,setEmailErr]=useState("")
 
-  const [sellerDetails,setSellerDetails]=useState({
-    shopName:"",
-    ownerName:"",
-    category:"",
-    email:"",
-    contactNo:""
-
-  })
-
-  const handleChange=(e)=>{
-    setSellerDetails({...sellerDetails,[e.target.name]:e.target.value})
-    console.log(sellerDetails)
-  }
-
-  const handleSubmit=async()=>{
-    // Check if all fields are filled
-    if (
-      !sellerDetails.shopName ||
-      !sellerDetails.ownerName ||
-      !sellerDetails.category ||
-      !sellerDetails.email ||
-      !sellerDetails.contactNo
-    ) {
-      alert("Please fill in all required fields.");
+  const validation = ()=>{
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(sellerDetails.email)) {
+      setEmailErr("Enter valid email")
       return;
     }
-    try {
-      const response = await fetch("http://localhost:8080/api/addSeller", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(sellerDetails),
-      });
-      if (response.ok) {
-        alert("seller registered sucessfully");
-      } else {
-        alert("Error Occured");
-      }
-    } catch (error) {
-      console.log("Error : " + error);
+
+    const numberPattern = /^\d{10}$/;
+    if(!numberPattern.test(sellerDetails.contactNo))
+    {
+      setContactErr("only 10 digits are allowed")
+      return 0;
     }
+
+    if(sellerDetails.shopName==""||sellerDetails.category==""||sellerDetails.ownerName==""||sellerDetails.firstName=="")
+    {
+      return 0;
+    }
+    return 1;
   }
 
+  const handleSubmit = async () => {
+    // Check if all fields are filled
+    if (!validation()) {
+      alert("Please fill in all required fields.");
+    } else {
+      //send data to backend
+      try {
+        const response = await fetch("http://localhost:8080/api/addSeller", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(sellerDetails),
+        });
+        if (response.ok) {
+          alert("seller registered sucessfully");
+        } else {
+          alert("Error Occured");
+        }
+      } catch (error) {
+        console.log("Error : " + error);
+      }
+    }
+  };
 
   return (
     <div>
@@ -91,29 +107,41 @@ const SellerRegistration = () => {
         </div>
         <div className="mb-3">
           <label className="form-label fw-medium">Category</label>
-            <select
-              className="form-select"
-              name="category"
-              id=""
-              value={sellerDetails.category}
-              onChange={handleChange}
-            >
-              <option value="">Select</option>
-              <option value="Home Furnishing">Home Furnishing</option>
-              <option value="Home Decor">Home Decor</option>
-              <option value="Gift Item">Gift Item</option>
-            </select>
+          <select
+            className="form-select"
+            name="category"
+            id=""
+            value={sellerDetails.category}
+            onChange={handleChange}
+          >
+            <option value="">Select</option>
+            <option value="Home Furnishing">Home Furnishing</option>
+            <option value="Home Decor">Home Decor</option>
+            <option value="Gift Item">Gift Item</option>
+          </select>
         </div>
 
         <div className="w-100 mt-4">
           <h4 className="my-3">Personal Setails</h4>
           <div className="mb-3">
             <label className="form-label fw-medium">First Name</label>
-            <input className="form-control" type="text" />
+            <input
+              className="form-control"
+              name="firstName"
+              type="text"
+              value={sellerDetails.firstName}
+              onChange={handleChange}
+            />
           </div>
           <div className="mb-3">
             <label className="form-label fw-medium">Last Name</label>
-            <input className="form-control" type="text" />
+            <input
+              className="form-control"
+              type="text"
+              name="lastName"
+              value={sellerDetails.lastName}
+              onChange={handleChange}
+            />
           </div>
         </div>
 
@@ -123,11 +151,12 @@ const SellerRegistration = () => {
             <label className="form-label fw-medium">Email</label>
             <input
               className="form-control"
-              type="text"
+              type="email"
               name="email"
               value={sellerDetails.email}
               onChange={handleChange}
             />
+            <p style={{ color: "red" }}>{emailErr}</p>
           </div>
           <div className="mb-3">
             <label className="form-label fw-medium">Contact No.</label>
@@ -138,14 +167,17 @@ const SellerRegistration = () => {
               value={sellerDetails.contactNo}
               onChange={handleChange}
             />
-          </div>
-          <div className="mb-3">
-            <label className="form-label fw-medium">Contact No. </label>
-            <input className="form-control" type="text" />
+            <p style={{ color: "red" }}>{contactErr}</p>
           </div>
           <div className="mb-3">
             <label className="form-label fw-medium">Website Link</label>
-            <input className="form-control" type="text" />
+            <input
+              className="form-control"
+              type="text"
+              name="websiteLink"
+              value={sellerDetails.websiteLink}
+              onChange={handleChange}
+            />
           </div>
         </div>
 
@@ -157,13 +189,19 @@ const SellerRegistration = () => {
           />
           <label className="form-check-label">Check me out</label>
         </div>
-        <button type="submit" className="btn btn-primary" onClick={()=>{
-          dispatch(addSeller(sellerDetails));handleSubmit();}} >
+        <button
+          type="submit"
+          className="btn btn-primary"
+          onClick={() => {
+            dispatch(addSeller(sellerDetails));
+            handleSubmit();
+          }}
+        >
           Submit
         </button>
       </div>
     </div>
   );
-}
+};
 
-export default SellerRegistration
+export default SellerRegistration;

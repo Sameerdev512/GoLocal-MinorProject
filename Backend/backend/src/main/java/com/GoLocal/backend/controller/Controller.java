@@ -1,6 +1,8 @@
 package com.GoLocal.backend.controller;
 
+import com.GoLocal.backend.model.Customer;
 import com.GoLocal.backend.model.Seller;
+import com.GoLocal.backend.service.CustomerService;
 import com.GoLocal.backend.service.SellerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +17,15 @@ public class Controller {
 
     @Autowired
     private SellerService sellerService;
+    private CustomerService customerService;
+
+    @Autowired
+    public Controller(SellerService sellerService, CustomerService customerService) {
+        this.sellerService = sellerService;
+        this.customerService = customerService;
+    }
+
+    //Mappings
     @GetMapping("/")
     public String sayHello()
     {
@@ -49,5 +60,16 @@ public class Controller {
     public void deleteSeller(@PathVariable Long id)
     {
         sellerService.deleteSeller(id);
+    }
+
+    @GetMapping("/customers")
+    public List<Customer> getAllCustomer()
+    {
+        return customerService.getAllCustomer();
+    }
+    @PostMapping("/signup")
+    public Customer saveCustomer(@RequestBody Customer customer)
+    {
+        return customerService.saveCustomer(customer);
     }
 }
