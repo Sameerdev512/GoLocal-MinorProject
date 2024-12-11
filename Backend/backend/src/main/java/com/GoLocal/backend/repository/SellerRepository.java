@@ -2,6 +2,10 @@ package com.GoLocal.backend.repository;
 
 import com.GoLocal.backend.model.Seller;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface SellerRepository extends JpaRepository <Seller,Long>{
+import java.util.Optional;
+@Repository
+public interface SellerRepository extends JpaRepository<Seller, Long> {
+    Optional<Seller> findByEmail(String email); // Find seller by email
 }
