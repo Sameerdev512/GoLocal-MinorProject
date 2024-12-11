@@ -1,8 +1,10 @@
-import Navbar2 from "../../componants/Navbar2"
+// It is the seller page that will show all listed products to the seller not visible for customer
+
+import Navbar2 from "../../componants/SellerNavbar"
 import MyShopItem from "./MyShopItem";
 import { useSelector } from "react-redux";
 
-const MyShopProducts = () => {
+const MyShopListedProducts = () => {
   return (
     <div>
       <Navbar2 />
@@ -18,10 +20,9 @@ const MyShopProducts = () => {
           <MyShopItem />
           <MyShopItem />
           <MyShopItem />
-        
       </div>
     </div>
   );
 }
 
-export default MyShopProducts
+export default MyShopListedProducts

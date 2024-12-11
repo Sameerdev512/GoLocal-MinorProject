@@ -1,4 +1,4 @@
-import Navbar from "../../componants/Navbar"
+import Navbar from "./Navbar"
 
 const About = () => {
   return (

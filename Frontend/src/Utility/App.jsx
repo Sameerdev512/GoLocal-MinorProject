@@ -5,9 +5,9 @@ import { BrowserRouter,Routes,Route } from 'react-router-dom'
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import SellerRegistration from '../Pages/Authentication/SellerRegistration';
-import About from '../Pages/Authentication/About';
+import About from '../componants/About';
 import SellerDashboard from '../Pages/Seller/SellerDashboard';
-import MyShopProducts from '../Pages/Seller/MyShopProducts';
+import MyShopListedProducts from '../Pages/Seller/MyShopListedProducts';
 
 function App() {
 
@@ -19,7 +19,7 @@ function App() {
       <Route path="/Login" element={<Login/>}></Route>
       <Route path="/SignUp" element={<SignUp/>}></Route>
       <Route path="/About" element={<About/>}></Route>
-      <Route path="/MyShopProducts" element={<MyShopProducts/>}></Route>
+      <Route path="/MyShopProducts" element={<MyShopListedProducts/>}></Route>
       <Route path="/SellerProfile" element={<SellerDashboard/>}></Route>
       <Route path="/Registration" element={<SellerRegistration/>}></Route>
     </Routes>

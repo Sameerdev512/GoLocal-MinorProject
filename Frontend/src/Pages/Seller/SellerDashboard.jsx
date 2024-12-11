@@ -1,9 +1,9 @@
-import Navbar2 from "../../componants/Navbar2";
+import SellerNavbar from "../../componants/SellerNavbar";
 
 const SellerDashboard = () => {
   return (
     <div>
-      <Navbar2 />
+      <SellerNavbar />
       <div className="container w-100 mt-2 d-flex flex-row justify-content-between">
         <div className="left-section w-50">
           <div className="right w-100 mx-3">

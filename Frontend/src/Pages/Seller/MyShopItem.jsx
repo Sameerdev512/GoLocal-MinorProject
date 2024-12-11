@@ -1,10 +1,11 @@
+//Design of products that are listed in the MyShopListedProducts.jsx file
 
 const MyShopItem = () => {
   return (
     <div>
       <div className="card d-flex p-1 my-3" style={{ width: "240px" ,backgroundColor:'lightcyan'}}>
         <img
-          src="/img.jpg"
+          src="src/pages/Seller/img.jpg"
           className="card-img-top"
           alt="..."
           style={{height:'200px'}}

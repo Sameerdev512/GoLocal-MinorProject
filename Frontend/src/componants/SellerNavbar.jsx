@@ -2,7 +2,7 @@ import { Link, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { CgProfile } from "react-icons/cg";
 
-const Navbar2 = () => {
+const SellerNavbar = () => {
   const location = useLocation();
   const [activeLink, setActiveLink] = useState("");
   const [sideBarVisible, setSideBarVisible] = useState("none");
@@ -136,4 +136,4 @@ const Navbar2 = () => {
   );
 };
 
-export default Navbar2;
+export default SellerNavbar;

@@ -17,34 +17,56 @@ const SellerRegistration = () => {
     contactNo: "",
     websiteLink: "",
   });
+  const [contactErr, setContactErr] = useState("");
+  const [emailErr, setEmailErr] = useState("");
 
-  const handleChange = (e) => {
-    setSellerDetails({ ...sellerDetails, [e.target.name]: e.target.value });
-    console.log(sellerDetails);
-  };
-
-  const [contactErr,setContactErr]=useState("")
-  const [emailErr,setEmailErr]=useState("")
-
-  const validation = ()=>{
+  const emailValidation = () => {
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailPattern.test(sellerDetails.email)) {
-      setEmailErr("Enter valid email")
-      return;
-    }
-
-    const numberPattern = /^\d{10}$/;
-    if(!numberPattern.test(sellerDetails.contactNo))
-    {
-      setContactErr("only 10 digits are allowed")
+      setEmailErr("Enter valid email");
       return 0;
     }
+    setEmailErr("");
+    return 1;
+  };
 
-    if(sellerDetails.shopName==""||sellerDetails.category==""||sellerDetails.ownerName==""||sellerDetails.firstName=="")
+  const contactNumberValidation = (e) => 
     {
+    setSellerDetails({
+      ...sellerDetails,
+      contactNo: e.target.value,
+    });
+    const value = e.target.value;
+    const numberPattern = /^\d{10}$/;
+    if (!numberPattern.test(value)) {
+      setContactErr("Invalid number");
+      return 0;
+    } else {
+      // const sanitizedValue = value.replace(/\D/g, "").slice(0, 10); used to clean string give only digits not dcharacter and other
+      if (value.length === 10) {
+        setContactErr("");
+      } else {
+        setContactErr("Invalid number");
+      }
+    }
+  };
+
+  const validation = () => {
+    if (
+      sellerDetails.shopName == "" ||
+      sellerDetails.category == "" ||
+      sellerDetails.ownerName == ""||
+      sellerDetails.firstName == ""
+    ) {
       return 0;
     }
     return 1;
+  };
+
+  //handling input changes
+  const handleChange = (e) => {
+    setSellerDetails({ ...sellerDetails, [e.target.name]: e.target.value });
+    console.log(sellerDetails);
   }
 
   const handleSubmit = async () => {
@@ -149,13 +171,16 @@ const SellerRegistration = () => {
           <h4 className="mt-3">Contact Information</h4>
           <div className="mb-3">
             <label className="form-label fw-medium">Email</label>
-            <input
-              className="form-control"
-              type="email"
-              name="email"
-              value={sellerDetails.email}
-              onChange={handleChange}
-            />
+            <div className="d-flex align-items-center w-100">
+              <input
+                className="form-control"
+                type="email"
+                name="email"
+                value={sellerDetails.email}
+                onChange={(e)=>{handleChange(e),emailValidation(e)}}
+              />
+              <span style={{ marginLeft: "-50px" }}>Verify</span>
+            </div>
             <p style={{ color: "red" }}>{emailErr}</p>
           </div>
           <div className="mb-3">
@@ -165,7 +190,7 @@ const SellerRegistration = () => {
               type="text"
               name="contactNo"
               value={sellerDetails.contactNo}
-              onChange={handleChange}
+              onChange={contactNumberValidation}
             />
             <p style={{ color: "red" }}>{contactErr}</p>
           </div>
