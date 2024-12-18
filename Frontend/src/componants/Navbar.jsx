@@ -2,7 +2,7 @@ import { Link, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
 
-const Navbar = () => {
+const Navbar = ({loginOrLogout}) => {
   const location = useLocation();
   const [activeLink, setActiveLink] = useState("home");
   const [sideBarVisible, setSideBarVisible] = useState("none");
@@ -91,7 +91,7 @@ const Navbar = () => {
                   }`}
                   to="/Login"
                 >
-                  Login
+                  {loginOrLogout=="logout" ? "logout" : "Login"}
                 </Link>
               </li>
               <li className="nav-item">

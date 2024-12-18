@@ -6,7 +6,10 @@ import { useSelector } from "react-redux";
 
 const SellerRegistration = () => {
   const dispatch = useDispatch();
+
+
   const seller = useSelector((state) => state.seller.seller);
+
   const [sellerDetails, setSellerDetails] = useState({
     shopName: "",
     ownerName: "",
@@ -17,8 +20,11 @@ const SellerRegistration = () => {
     contactNo: "",
     websiteLink: "",
   });
+
+
   const [contactErr, setContactErr] = useState("");
   const [emailErr, setEmailErr] = useState("");
+
 
   const emailValidation = () => {
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -51,6 +57,8 @@ const SellerRegistration = () => {
     }
   };
 
+  
+
   const validation = () => {
     if (
       sellerDetails.shopName == "" ||
@@ -69,6 +77,7 @@ const SellerRegistration = () => {
     console.log(sellerDetails);
   }
 
+  
   const handleSubmit = async () => {
     // Check if all fields are filled
     if (!validation()) {
@@ -177,11 +186,16 @@ const SellerRegistration = () => {
                 type="email"
                 name="email"
                 value={sellerDetails.email}
-                onChange={(e)=>{handleChange(e),emailValidation(e)}}
+                onChange={(e) => {
+                  handleChange(e), emailValidation(e);
+                }}
               />
-              <span style={{ marginLeft: "-50px" }}>Verify</span>
+
             </div>
             <p style={{ color: "red" }}>{emailErr}</p>
+
+            
+            
           </div>
           <div className="mb-3">
             <label className="form-label fw-medium">Contact No.</label>
@@ -216,7 +230,7 @@ const SellerRegistration = () => {
         </div>
         <button
           type="submit"
-          className="btn btn-primary"
+          className={`btn btn-primary `}
           onClick={() => {
             dispatch(addSeller(sellerDetails));
             handleSubmit();
