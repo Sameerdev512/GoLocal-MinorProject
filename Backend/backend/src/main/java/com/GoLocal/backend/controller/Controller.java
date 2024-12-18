@@ -1,5 +1,6 @@
 package com.GoLocal.backend.controller;
 
+import com.GoLocal.backend.dto.CustomerResponse;
 import com.GoLocal.backend.model.Customer;
 import com.GoLocal.backend.model.Seller;
 import com.GoLocal.backend.service.CustomerService;
@@ -68,8 +69,11 @@ public class Controller {
         return customerService.getAllCustomer();
     }
     @PostMapping("/signup")
-    public Customer saveCustomer(@RequestBody Customer customer)
+    public Customer registerCustomer(@RequestBody Customer customer)
     {
-        return customerService.saveCustomer(customer);
+        return customerService.registerCustomer(customer);
     }
+
+    @PostMapping("/login")
+    public CustomerResponse loginCustomer(@RequestBody Customer customer){return  customerService.loginCustomer(customer);}
 }

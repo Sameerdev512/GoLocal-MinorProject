@@ -11,9 +11,9 @@ const Dashboard = () => {
     <div>
       <Navbar login="Login" signup="SignUp" active=""/>
       <h2 className="mx-auto my-3">HomePage</h2>
-      {/* <LocalShop/> */}
-      {/* <AddProducts/> */}
-      {/* <SellerDashboard/> */}
+      {/* <LocalShop/>
+      <AddProducts/>
+      <SellerDashboard/>   */}
     </div>
   );
 }

@@ -13,4 +13,5 @@ public class OtpResponse {
     private int statusCode;
     private String responseMessage;
     private boolean isOtpValid;
+    boolean userExists;
 }

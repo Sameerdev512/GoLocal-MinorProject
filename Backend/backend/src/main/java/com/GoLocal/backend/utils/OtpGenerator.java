@@ -8,7 +8,7 @@ public class OtpGenerator {
         StringBuilder otp = new StringBuilder();
         Random random = new Random();
         int count = 0;
-        while(count < 4 )
+        while(count < 6 )
         {
             otp.append(random.nextInt(10));
             count++;

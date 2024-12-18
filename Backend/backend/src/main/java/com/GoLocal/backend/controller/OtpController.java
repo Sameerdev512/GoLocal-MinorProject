@@ -7,6 +7,7 @@ import com.GoLocal.backend.service.OtpService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:5173")
 //@AllArgsConstructor
 @RequestMapping("/otp")
 public class OtpController {
