@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -32,6 +33,48 @@ public class OtpService {
     // Method to send OTP
     public OtpResponse sendOtp(OtpRequest otpRequest) {
         try {
+            //taking main given in input by customer
+            Optional<Otp> optionalOtp = Optional.ofNullable(otpRepository.findByEmail(otpRequest.getEmail()));
+
+            //don't generate otp if user already registered simply give user registered message
+            try{
+                Class.forName("com.mysql.cj.jdbc.Driver");
+            }catch(Exception e){
+                System.out.println(e.getMessage());
+            }
+
+            try{
+                String query = "select email from customer where email = ?";
+                Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/backend","root","Admin@2004");
+                PreparedStatement psmt = conn.prepareStatement(query);
+                psmt.setString(1, otpRequest.getEmail());
+                ResultSet rs = psmt.executeQuery();
+
+            String emaildb = "";
+            if(rs.next())
+            {
+                emaildb = rs.getString("email");
+            }
+
+            if(otpRequest.getEmail().equals(emaildb)){
+                System.out.println("User already exists");
+                return OtpResponse.builder()
+                        .userExists(true)
+                        .build();
+            }
+        }catch(SQLException e)
+        {
+            System.out.println(e.getMessage());
+        }
+
+            //delete otp if generated earlier
+            if(!optionalOtp.isEmpty())
+            {
+                Otp otp2 = optionalOtp.get();
+                otpRepository.delete(otp2);
+            }
+
+            //generate new otp
             String otp = OtpGenerator.generateOtp(); // Generate OTP
             log.info("Generated OTP for {}: {}", otpRequest.getEmail(), otp);
 
